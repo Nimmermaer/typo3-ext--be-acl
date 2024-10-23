@@ -1,6 +1,6 @@
 <?php
 
-namespace JBartels\BeAcl\ViewHelpers;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,19 +15,17 @@ namespace JBartels\BeAcl\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace JBartels\BeAcl\ViewHelpers;
+
 use TYPO3\CMS\Beuser\Exception;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Get a value from an array by given key.
  */
-class ArrayElementViewHelper extends AbstractViewHelper
+final class ArrayElementViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
-
     public function initializeArguments(): void
     {
         $this->registerArgument('array', 'array', 'Array to search in', true);
@@ -36,34 +34,26 @@ class ArrayElementViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Return array element by key.
+     * Return array element by key. Accessed values must be scalar (string, int, float or double)
      *
      * @throws Exception
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): string {
-        $array = $arguments['array'];
-        $key = $arguments['key'];
-        $subKey = $arguments['subKey'];
-        $result = 0;
-
+    public function render(): string
+    {
+        $array = $this->arguments['array'];
+        $key = $this->arguments['key'];
+        $subKey = $this->arguments['subKey'];
+        $result = '';
         if (is_array($array)) {
             $result = static::getValue($array, $key);
             if (is_array($result) && $subKey) {
                 $result = static::getValue($result, $subKey);
             }
         }
-
-        if (! is_scalar($result)) {
-            throw new Exception(
-                'Only scalar or null return values (string, int, float or double, null) are supported.',
-                1_382_284_105
-            );
+        if (!is_scalar($result)) {
+            throw new Exception('Only scalar return values (string, int, float or double) are supported.', 1382284105);
         }
-        return $result;
+        return (string)$result;
     }
 
     protected static function getValue($array, $key, $del = '.', $default = 0) : int|array

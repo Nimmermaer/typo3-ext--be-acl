@@ -10,16 +10,14 @@
 <f:layout name="Module" />
 <f:section name="Content">
 
-	<f:be.pageRenderer
-			includeJavaScriptModules="{
+    <f:be.pageRenderer
+        includeJavaScriptModules="{
             0: '@typo3/beuser/permissions.js'
         }"
-	/>
+    />
 
 	<h1><f:translate key="LLL:EXT:beuser/Resources/Private/Language/locallang_mod_permission.xlf:permissions" /></h1>
-</f:section>
 
-<f:section name="Content">
 	<form action="{f:be.uri(route: 'permissions_pages', parameters: '{id: pageUid}')}" method="post">
 		<div class="form-row">
 			<div class="form-group">
@@ -80,7 +78,7 @@
 					<f:if condition="{data.row.uid}">
 						<f:then>
 							<f:variable name="editUrl">
-								<backend:moduleLink route="permissions_pages" arguments="{id: '{f:if(condition: data.row._ORIG_uid, then: data.row._ORIG_uid, else: data.row.uid)}', action: 'edit', depth: depth, returnUrl: returnUrl}" />
+                                <backend:moduleLink route="permissions_pages" arguments="{id: '{f:if(condition: data.row._ORIG_uid, then: data.row._ORIG_uid, else: data.row.uid)}', action: 'edit', depth: depth, returnUrl: returnUrl}" />
 							</f:variable>
 
 							<f:comment>
@@ -88,9 +86,12 @@
 							</f:comment>
 
 							<td class="permission-column-name">
-								<a href="{editUrl}">
-									{data.depthData -> f:format.raw()}{data.HTML -> f:format.raw()}
-									<f:if condition="{data.icon}">{data.icon -> f:format.raw()}</f:if>
+                                <f:spaceless>
+                                    {data.depthData -> f:format.raw()}{data.HTML -> f:format.raw()}
+                                    <f:if condition="{data.icon}">{data.icon -> f:format.raw()}</f:if>
+                                </f:spaceless>
+								<a href="{editUrl}"
+                                    title="{f:translate(key: 'LLL:EXT:beuser/Resources/Private/Language/locallang_mod_permission.xlf:ch_permissions')}">
 									{data.row.title -> f:format.crop(maxCharacters:20)}
 								</a>
 							</td>
@@ -196,7 +197,6 @@
 					<td nowrap="nowrap"><small><strong><ba:arrayElement array="{aclList}" key="{data.row.uid}" subKey="meta.1.acls" /></strong> <f:translate key='LLL:EXT:be_acl/Resources/Private/Languages/locallang_perm.xlf:acls' /><br />
 						<strong><ba:arrayElement array="{aclList}" key="{data.row.uid}" subKey="meta.1.inherited" /></strong> <f:translate key='LLL:EXT:be_acl/Resources/Private/Languages/locallang_perm.xlf:aclsInherited' /></small>
 					</td>
-
 					<f:if condition="{groupSelectedAcls->f:count()} > 0">
 						<f:for each="{groupSelectedAcls}" as="groupAcl" key="oid">
 							<td nowrap="nowrap">

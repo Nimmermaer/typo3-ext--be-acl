@@ -20,6 +20,19 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "name": "fontawesome-provider",
+            "type": "vcs",
+            "url": "https://github.com/Nimmermaer/fontawesome-provider.git"
+        },
+
+        {
+            "type": "path",
+            "url": "packages/*",
+            "canonical": true
+        }
+    ],
     "support": {
         "source": "https://github.com/p2media/typo3-ext--be-acl",
         "issues": "https://github.com/p2media/typo3-ext--be-acl/issues",
@@ -27,8 +40,8 @@
         "docs": "https://docs.typo3.org/typo3cms/extensions/be_acl/"
     },
     "require": {
-        "typo3/cms-core": "^12.4",
-        "friendsoftypo3/fontawesome-provider": "*"
+        "typo3/cms-core": "^13.4",
+        "friendsoftypo3/fontawesome-provider": "dev-main"
     },
     "autoload": {
         "psr-4": {

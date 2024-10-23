@@ -7,7 +7,6 @@ use JBartels\BeAcl\Controller\PermissionController;
  */
 return [
     // Dispatch the permissions actions
-
     'user_access_permissions' => [
         'path' => '/users/access/permissions',
         'target' => PermissionController::class . '::handleAjaxRequest',

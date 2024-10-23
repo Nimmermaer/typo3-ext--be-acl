@@ -1,5 +1,10 @@
+options {
+    saveDocNew {
+        tx_beacl_acl = 1
+    }
+}
 templates {
     typo3/cms-beuser {
-        1686066930 = p2media/be-acl:Resources/Private
+        1686066930 = p2media/be-acl:Resources/Private/
     }
 }

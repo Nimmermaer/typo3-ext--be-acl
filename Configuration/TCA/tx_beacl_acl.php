@@ -12,7 +12,10 @@ return [
         'crdate' => 'crdate',
         'type' => 'type',
         'default_sortby' => 'ORDER BY type',
-        'iconfile' => 'EXT:be_acl/Resources/Public/Icons/icon_tx_beacl_acl.gif',
+        'security' =>  ['ignorePageTypeRestriction' => true],
+        'typeicon_classes' => [
+            'default' => 'tx_beacl-acl'
+        ],
     ],
     'columns' => [
         'type' => [
@@ -36,7 +39,7 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => 'JBartels\BeAcl\Utility\ObjectSelection->select',
+                'itemsProcFunc' => \JBartels\BeAcl\Utility\ObjectSelection::class. '->select',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
